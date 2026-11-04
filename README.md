@@ -1,104 +1,133 @@
-# OiShi-e! (The AR Muse)
+# OiShi-e!
 
-![OiShi-e!](build/icon-src/icon-256.png)
+![OiShi-e! icon](desktop/build/icon-src/icon-256.png)
 
-OiShi-e! is an AR creature companion that lives inside your everyday life. Point your camera at any real object — a mug, a plant, a street sign — and Meta's Muse Spark model looks at it and hatches a unique "Muse" creature with its own element, stats, personality and voice.
+**Turn everyday objects into an AR creature companion.**
 
-Your creature then grows with what you actually do: it reacts to places you visit, keeps a daily diary of your day, dances, battles wild creatures, and levels up through a hybrid system (role-based rules + your real activity + AI-tuned weights) — no menus to micro-manage.
+Point your camera at a real object (a mug, a plant, a storefront). Meta's Muse Spark model looks at it and hatches a unique creature with its own element, stats, personality and voice. Your creature grows with what you actually do: it reacts to places you visit, keeps a diary of your day, dances, battles wild creatures, and answers your voice questions.
 
-The problem: most "healthy habit" and lifestyle apps feel like chores, and most AR games end when you close the app. OiShi-e! turns ordinary moments into play, and lets a companion nudge at the right time (e.g. telling you to stop drinking or to call a designated driver) through a character you actually care about. In-game tokens reward everyday actions, designed to connect to the Meta platform economy.
+Healthy-habit apps often feel like chores, and most AR games end when you close the app. OiShi-e! turns ordinary moments into play, and a companion you care about can nudge you at the right time, for example to drink water or to call a designated driver.
 
-일상을 플레이로 바꾸는 AR 크리처 동반자 (Next.js + three.js).
+## Features
+
+- **Scan & hatch:** capture a real object and generate a creature from it (`/pov`).
+- **Explore & battle:** find wild creatures on the walk-around map and battle them.
+- **Dex & dance:** a creature dex with dance comparison (`/dex`).
+- **Camp:** tokens and the external-connection status panel (`/camp`).
+- **Voice:** ask your creature questions by voice (`/api/voice`, `/api/muse/ask`).
+- **Diary & care:** feeding, daily diary and personality that changes with your activity.
+
+Demo video: link coming soon.
 
 ## Built with Meta
 
-- Muse Spark (muse-spark-1.3) via Meta Model API: the core brain. It analyzes camera captures to generate creatures (/api/look, /api/creature), writes the creature's daily diary (/api/diary), reacts to feeding (/api/feed), and drives battle commentary and AI decisions (/api/battle).
-- Muse Image via Meta Model API (images/generations): generates creature art and skins.
-- Meta Model API audio transcription: voice commands to your creature (/api/voice).
-- Llama Guard: safety gate for user-authored creature skins (UGC moderation).
-- Muse Code: used as our coding agent to build the app across multiple parallel sessions.
+- **Muse Spark** (muse-spark-1.3) through the Meta Model API. It analyzes camera captures to create creatures (`/api/look`, `/api/creature`), writes daily diaries (`/api/diary`), reacts to feeding (`/api/feed`), and drives battle commentary (`/api/battle`).
+- **Muse Image** through the Meta Model API: creature art and skins.
+- **Meta Model API audio transcription:** voice commands (`/api/voice`).
+- **Llama Guard:** safety check for user-made creature skins.
+- **Muse Code:** used as our coding agent to build the app across several parallel sessions.
 
-## External services & graceful degradation
+## Sign-in
 
-Full table: [docs/EXTERNAL_APIS.md](docs/EXTERNAL_APIS.md).
-All AI routes return 200 + a rule-based stand-in (`fallback: true`) when the key is missing or upstream fails, so the game never stalls.
-Local bundles (`public/vendor/`) replace the draco/MediaPipe CDNs for offline builds; live status is on the lounge "외부 연결 상태" panel (`/camp`).
+- **Google sign-in:** works (OpenID Connect, `/login`).
+- **Meta sign-in:** not active yet. The button returns a "not configured" message.
 
-![외부 연결 패널](docs/img/external-panel.png)
+## Known limitations
 
-## Run (local)
+We did not finish everything in this hackathon. Here is what is still open:
+
+- **Visual tearing:** some models still show tearing in certain poses and camera angles. We did not fix all of it.
+- **Ray-Ban glasses:** the glasses flow is designed and partly built (`/hud`), but it has **not been tested on real glasses**. DAT camera access is not included.
+- **Player vs. player battles:** not implemented.
+- **Social data:** the SNS hot-spot feature has the adapter layer only. No real social data is connected.
+- **Tokens:** the tokens in the app are demo tokens. There is no real payment or settlement.
+
+## Run locally
 
 ```bash
-cd web && npm ci
-# Windows: copy .env.example .env / mac·Linux: cp .env.example .env
-# then put your key in .env: MODEL_API_KEY=...
+cd web
+npm ci
+# Copy the example env file, then add your key:
+#   Windows: copy .env.example .env
+#   macOS/Linux: cp .env.example .env
+# Set MODEL_API_KEY=... inside .env
 npm run dev
-# http://localhost:3000
+# open http://localhost:3000
 ```
 
-Pages: explore & battle (`/pov`), creature dex with dance compare (`/dex`), camp (`/camp`), login (`/login`), battle demo (`/battle-demo`).
+Without a key, the AI routes still respond with a rule-based stand-in (`fallback: true`), so the game keeps running.
 
-Phone demo (same Wi-Fi): on the PC run `npm run serve:lan`, then enter the shown address + 6-digit code in the APK.
+**Phone demo (same Wi-Fi):** on the PC run `npm run serve:lan`, then enter the address and 6-digit code shown in the app.
 
-## 배포 4종
+## Platforms
 
-Releases: v1.0-submission (제출 확정 후 링크 기입 — APK·exe 바이너리는 여기에만 올린다. 외부 서버 배포 없음.)
+| Platform | How to run | Status |
+|---|---|---|
+| Web (PC Chrome) | `npm run dev` from `web/` | Ready |
+| Windows | Electron installer (`desktop/`) | Built from source; installer on Releases |
+| Android | Capacitor wrapper (`mobile/`), connects to the PC server on the same Wi-Fi | Debug APK on Releases |
+| Ray-Ban Meta | Same APK with Bluetooth glasses audio (HFP) | Not yet tested on real glasses |
 
-- 웹(PC 크롬): 이 저장소 소스로 `npm run dev` 실행. AI 호출·토큰 장부는 PC 서버에서만 돈다.
-- 안드로이드 APK: 같은 와이파이의 PC 서버에 붙는 "PC 허브 + 폰 AR" 구조. 디버그 APK는 Releases에서 받는다.
-- Ray-Ban 호환: 같은 APK + 블루투스 안경 마이크/스피커(HFP). `?hud=rayban` 규약. 실기기 테스트 전(설계/예정).
-- Windows exe: PC 내장 Next 서버 + Electron 설치본. 설치 후 실행하면 웹과 같은 화면.
-- DAT 카메라(안경 카메라 직접 연동): 설계/예정 — 이 제출에는 포함되지 않는다.
+Releases (`v1.0-submission`) will hold the Windows installer and the Android APK. The binaries are not stored in this repository.
 
-데모 토큰: 화면의 "뮤즈 토큰"은 데모 토큰이다(실제 결제·정산 없음). 플랫폼 공용 토큰은 Meta 몫이며, 이 앱은 실행 가능성만 보인다.
+## External services
 
-## 핵심 파일 지도
+Full table: [docs/EXTERNAL_APIS.md](docs/EXTERNAL_APIS.md).
 
-- `web/app/pov/page.tsx` — 탐험·배틀 메인 화면 (스캔·음성·배틀).
-- `web/app/dex/page.tsx` — 도감 + 춤 비교. `web/app/camp/page.tsx` — 캠프(토큰·외부 연결 패널).
-- `web/app/api/creature|look|diary|feed|battle|voice/route.ts` — AI 라우트 (키 없으면 200 + `fallback:true`).
-- `web/app/api/muse/ask/route.ts` — 음성 질문 이해 (VA-1/VA-2).
-- `web/lib/muse.ts` — Meta Model API 호출 공통. `web/lib/ask/intents.ts` — 질문 intent 9종.
-- `web/lib/token/` — 토큰 장부·시뮬레이션 구역. `web/lib/places/` — 충전처·힙한 곳 근거 목록.
-- `web/lib/external/registry.ts` — 외부 API 등록부 ([표](docs/EXTERNAL_APIS.md) 원천).
-- `web/components/CaptureBox.tsx` — 포획 상자. `web/components/PovCreature.tsx` — 크리처 3D.
-- `web/scripts/verify-*.mjs` — 기능별 검증 스크립트 (아래 실행법).
-- `desktop/electron/` — Windows exe 포장. `mobile/android/` — APK 래퍼 소스. `docs/EXTERNAL_APIS.md` — 외부 API 표.
+Live status is shown on the camp screen's external-connection panel.
 
-## 검증 스크립트 실행법
+![External connection panel](docs/img/external-panel.png)
+
+Local copies of the draco and MediaPipe files (`web/public/vendor/`) let the app run offline.
+
+## Key files
+
+- `web/app/pov/page.tsx`: explore and battle screen (scan, voice, battle).
+- `web/app/dex/page.tsx`: creature dex and dance comparison.
+- `web/app/camp/page.tsx`: camp screen (tokens, external connections).
+- `web/app/api/*/route.ts`: AI routes (creature, look, diary, feed, battle, voice).
+- `web/lib/muse.ts`: shared Meta Model API client.
+- `web/lib/external/registry.ts`: registry of external APIs.
+- `desktop/electron/`: Windows installer packaging.
+- `mobile/android/`: Android wrapper source.
+
+## Checks
 
 ```bash
-node web/scripts/verify-voice-ask.mjs   # VA 음성 질문 (종료 코드 0 = 통과)
-node web/scripts/verify-battle.mjs      # 배틀 엔진
-node web/scripts/verify-sec.mjs         # 보안 게이트
+cd web
+node scripts/verify-voice-ask.mjs   # voice questions (exit code 0 = pass)
+node scripts/verify-battle.mjs      # battle engine
+node scripts/verify-sec.mjs         # security gate
 ```
 
 ## Credits
 
-- `Music: "Call to Adventure" Kevin MacLeod (incompetech.com), licensed under CC BY 4.0`
-- `Battle music: generated with ACE-Step (Apache 2.0)`
-- `Meme audio/video © original creators, used as parody/reference`
-- `Viewfinder tracking: 1eurofilter (BSD-3-Clause, https://github.com/casiez/OneEuroFilter)`
-- `Battle HUD springs: motion 11.18.2 (MIT, https://github.com/motiondivision/motion)`
-- `Battle display font: Jua + Baloo 2 (OFL, Google Fonts, self-hosted in public/fonts — next/font metadata lacks Jua korean subset in Next 14.2)`
-- `Skill icons: game-icons.net Lorc (CC BY 3.0) — public/icons/ATTRIBUTION.md`
-- `UI icons (flee/battle/distance): Lucide path inline (ISC, https://lucide.dev)`
-- `Android wrapper: Capacitor core/cli/android (MIT, https://github.com/ionic-team/capacitor)`
-- `In-app speech: @capacitor-community/speech-recognition (MIT, https://github.com/capacitor-community/speech-recognition)`
-- Walk background videos: Pexels License clips (free commercial use, no attribution) — see `public/videos/CREDITS.txt`.
+- Music: "Call to Adventure" by Kevin MacLeod (incompetech.com), CC BY 4.0. Music files are not included in this repository.
+- Battle music: generated with ACE-Step (Apache 2.0). Not included in this repository.
+- Meme audio/video: © original creators, used as parody and reference.
+- Viewfinder tracking: 1€ filter (BSD-3-Clause), https://github.com/casiez/OneEuroFilter
+- Battle HUD motion: motion 11.18.2 (MIT), https://github.com/motiondivision/motion
+- Battle display font: Jua and Baloo 2 (SIL Open Font License, Google Fonts), self-hosted in `web/public/fonts`.
+- Skill icons: game-icons.net by Lorc (CC BY 3.0), see `web/public/icons/ATTRIBUTION.md`.
+- UI icons: Lucide (ISC), https://lucide.dev
+- Android wrapper: Capacitor (MIT), https://github.com/ionic-team/capacitor
+- In-app speech: @capacitor-community/speech-recognition (MIT), https://github.com/capacitor-community/speech-recognition
+- Walk background videos: Pexels License clips (free commercial use, no attribution). See `web/public/videos/CREDITS.txt`.
 
-## Not in this repo
+## Not included in this repository
 
-- Song originals and reference-only media (BGM candidates, battle original, J Black clip, dance reference clips except the two dex compare clips).
+- Song originals and reference-only media.
 - Reference image sets, scratch folders, local token ledger, local certificates.
-- `.env` and any key files. Never commit keys.
-- Build outputs (APK·exe): see Releases.
+- `.env` and any key files. Keys are never committed.
+- Build outputs (APK and Windows installer): see Releases.
 
 ## Security notes
 
-- next 14.2.35 + Image Optimization disabled (`images.unoptimized`), local-only server (`HOSTNAME 127.0.0.1`).
-- Remaining next advisories need a 15.x upgrade (planned after submit; 15/16 require React 19 + routing changes).
-- No keys in repo (`.env` untracked). Session cookies are HMAC-signed; upstream error bodies stay in server logs.
-- LAN demo pairing: 6-digit code + HttpOnly cookie, AI rate limits, body caps (see `middleware.ts`).
+- Next.js 14.2.35, image optimization disabled (`images.unoptimized`), local-only server (`HOSTNAME 127.0.0.1`).
+- Remaining Next.js advisories need a 15.x upgrade, planned after submission.
+- No keys in the repository. Session cookies are HMAC-signed. Upstream error bodies stay in server logs.
+- LAN demo pairing uses a 6-digit code and an HttpOnly cookie. AI routes are rate-limited and request bodies are capped (see `web/middleware.ts`).
 
-마지막 업데이트: 2026-11-05 00:40
+---
+
+Last updated: 2026-11-05 01:03
