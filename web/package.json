@@ -2,7 +2,7 @@
   "name": "oishie",
   "version": "0.1.0",
   "private": true,
-  "main": "electron/main.js",
+  "main": "../desktop/electron/main.js",
   "scripts": {
     "dev": "next dev -p 3000",
     "serve:lan": "node scripts/lan-serve.mjs",
@@ -20,23 +20,23 @@
       "output": "dist"
     },
     "files": [
-      "electron/**",
+      "../desktop/electron/**",
       "standalone-dist/**",
       "certs/lan/**/*",
-      "build/icon.ico",
+      "../desktop/build/icon.ico",
       "package.json"
     ],
     "win": {
       "target": [
         "nsis"
       ],
-      "icon": "build/icon.ico"
+      "icon": "../desktop/build/icon.ico"
     },
     "nsis": {
       "oneClick": false,
       "allowToChangeInstallationDirectory": true,
-      "installerIcon": "build/icon.ico",
-      "uninstallerIcon": "build/icon.ico"
+      "installerIcon": "../desktop/build/icon.ico",
+      "uninstallerIcon": "../desktop/build/icon.ico"
     }
   },
   "dependencies": {
