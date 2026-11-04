@@ -1,0 +1,178 @@
+{
+ "fire-02": [
+  "armL",
+  "armR",
+  "head",
+  "legL",
+  "legR",
+  "tail",
+  "torso"
+ ],
+ "rock-04": [
+  "head",
+  "legL",
+  "legR",
+  "torso",
+  "wingL",
+  "wingR"
+ ],
+ "fire-01": [
+  "armL",
+  "armR",
+  "head",
+  "legL",
+  "legR",
+  "tail",
+  "torso"
+ ],
+ "fire-03": [
+  "armL",
+  "armR",
+  "head",
+  "legL",
+  "legR",
+  "tail",
+  "torso"
+ ],
+ "fire-04": [
+  "legL",
+  "legR",
+  "torso"
+ ],
+ "fire-05": [
+  "armL",
+  "armR",
+  "head",
+  "legL",
+  "legR",
+  "torso"
+ ],
+ "grass-01": [
+  "armL",
+  "armR",
+  "head",
+  "legL",
+  "legR",
+  "torso"
+ ],
+ "grass-02": [
+  "legL",
+  "legR",
+  "torso"
+ ],
+ "grass-03": [
+  "armL",
+  "armR",
+  "head",
+  "legL",
+  "legR",
+  "torso"
+ ],
+ "grass-04": [
+  "armL",
+  "armR",
+  "head",
+  "legL",
+  "legR",
+  "tail",
+  "torso"
+ ],
+ "grass-05": [
+  "legL",
+  "legR",
+  "torso"
+ ],
+ "rock-01": [
+  "legL",
+  "legR",
+  "torso"
+ ],
+ "rock-02": [
+  "armL",
+  "armR",
+  "head",
+  "legL",
+  "legR",
+  "torso"
+ ],
+ "rock-03": [
+  "legL",
+  "legR",
+  "torso"
+ ],
+ "water-01": [
+  "head",
+  "legL",
+  "legR",
+  "torso",
+  "wingL",
+  "wingR"
+ ],
+ "water-02": [
+  "armL",
+  "armR",
+  "head",
+  "legL",
+  "legR",
+  "torso"
+ ],
+ "water-03": [
+  "armL",
+  "armR",
+  "head",
+  "legL",
+  "legR",
+  "torso"
+ ],
+ "water-04": [
+  "armL",
+  "armR",
+  "head",
+  "legL",
+  "legR",
+  "torso"
+ ],
+ "water-05": [
+  "armL",
+  "armR",
+  "head",
+  "legL",
+  "legR",
+  "torso"
+ ],
+ "wind-01": [
+  "head",
+  "legL",
+  "legR",
+  "torso"
+ ],
+ "wind-02": [
+  "head",
+  "legL",
+  "legR",
+  "torso"
+ ],
+ "wind-03": [
+  "head",
+  "legL",
+  "legR",
+  "torso",
+  "wingL",
+  "wingR"
+ ],
+ "wind-04": [
+  "armL",
+  "armR",
+  "fan",
+  "head",
+  "legL",
+  "legR",
+  "torso"
+ ],
+ "wind-05": [
+  "head",
+  "legL",
+  "legR",
+  "torso"
+ ]
+}

@@ -1,0 +1,22 @@
+1P walk background videos for /pov simulator mode.
+Source: Pexels (https://www.pexels.com/license/)
+License: Pexels License - free for personal and commercial use, no attribution required.
+Confirmed via Pexels help center (https://help.pexels.com/hc/en-us/articles/360042295174)
+on 2026-11-01: "All photos and videos uploaded on Pexels are licensed under the
+Pexels license. This means you can use them for free for personal and commercial
+purposes without attribution."
+
+1) street_walk.mp4 (local edit: first 60s, 1280x720, muted, 17.9MB)
+   Original: "Point of View of a Person Walking on the Street" by German Korb
+   URL: https://www.pexels.com/video/point-of-view-of-a-person-walking-on-the-street-6537668/
+   Original: 97s, 2562x1440. Genuine first-person forward-walking take (winter sidewalk).
+
+2) cafe_walk.mp4 (local edit: 24.6s take x2 = 49.1s, 1280x720, muted, 15.8MB)
+   Original: "Explore the Historic Block Arcade in Melbourne" by Ous Njie
+   URL: https://www.pexels.com/video/explore-the-historic-block-arcade-in-melbourne-34735073/
+   Original: 24.6s, 3840x2160. Genuine first-person walk through an indoor shopping
+   arcade with cafe tables, chairs, shops and people (replaces the 2026-11-01 static
+   cafe take per user feedback; no 30s+ single-take indoor walk found, so one
+   mid-file loop seam at 24.6s).
+   Previous take (replaced 2026-11-01): "Video Inside a Coffee Shop on Winter" by
+   Lisa Fotios, https://www.pexels.com/video/video-inside-a-coffee-shop-on-winter-1853441/

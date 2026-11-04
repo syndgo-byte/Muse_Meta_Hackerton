@@ -1,0 +1,109 @@
+# deps
+node_modules/
+.next/
+.next-rel/
+out/
+
+# F2 electron 설치본 산출물 (깃허브 제출 제외)
+dist/
+standalone-dist/
+
+# env — 실제 키는 절대 커밋하지 않기 (.env.example만 포함)
+.env*
+!.env.example
+
+# OS
+.DS_Store
+Thumbs.db
+
+# survey / diag artifacts (regenerable via /survey; never commit)
+diag*.png
+dump-*.png
+final-*.png
+v-*.png
+smoke*.png
+server*.log
+*.log
+handoff-*.md
+*.tsbuildinfo
+verify/
+scratch/
+aiconfirm/
+backup-*/
+
+# python cache / venv (survey scripts)
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# next deploy cache
+.vercel/
+.turbo/
+
+# 기준 커밋 제외 (로컬 전용)
+tmp/
+generated_images/
+unity/
+.handoff/
+
+# 토큰 서버 원장 (D4, 로컬 전용)
+data/
+# 토큰 SQLite (§2-1a, data/에 포함되지만 명시)
+data/token.sqlite
+# SUB-1 제출 포함: unity 4폴더 + places 시드 (이 아래 규칙이 위 제외를 뒤집는다)
+!unity/
+unity/Library/
+unity/Logs/
+unity/Builds/
+unity/obj/
+unity/UserSettings/
+unity/*.csproj
+unity/*.sln
+!data/
+data/*
+!data/places/
+!data/places/*
+*.mp4
+
+# 저장소 제외 (원곡·참고·생성 산출물)
+public/bgm/battle.mp3
+public/bgm/candidates/
+scratch/
+video/audio/
+
+# 참고 영상 (원본 영상 재배포 금지)
+public/dance/*.mp4
+public/dance/*.m4a
+
+# 제출 포함 (CLI2_PREUPLOAD_ORDER §2: *.mp4 규칙 아래라야 예외가 먹는다)
+!public/dance/ref/san-facecam.mp4
+!public/dance/ref/a2o-16s.mp4
+!public/videos/cafe_walk.mp4
+!public/videos/street_walk.mp4
+!video/src/assets/ai/*.mp4
+docs/CAPTURE_REF_LUCILLA.md
+
+# isolated dev servers (NEXT_DIST_DIR)
+.next-*/
+
+# android 빌드 산출물 (PKG-2, 로컬 전용)
+android/.gradle/
+android/build/
+android/app/build/
+android/app/release/
+android/local.properties
+*.apk
+*.aab
+
+# 제출 정리 (11-05): 플레이·설치에 불필요한 것은 깃허브에 올리지 않는다
+unity/
+video/
+data/
+apk-web/
+docs/*
+!docs/EXTERNAL_APIS.md
+!docs/img/
+
+# 배경음악: 원곡 출하 금지 규칙 확인 전까지 제외 (플레이 필수 아님)
+public/bgm/

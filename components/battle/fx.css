@@ -1,0 +1,383 @@
+/* components/battle/fx.css — G2 연출 키프레임 (BATTLE_DESIGN §10-1).
+   8-I: premium pass — 값(색·그림자·번짐)만. 이름·시간·크기·위치 유지. */
+@keyframes bfx-float {
+  0% { transform: translateY(0) scale(1.4); opacity: 1; }
+  25% { transform: translateY(-6px) scale(1); opacity: 1; }
+  100% { transform: translateY(-40px) scale(1); opacity: 0; }
+}
+.bfx-floater {
+  position: absolute;
+  font-weight: 700;
+  font-size: 22px;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  text-shadow:
+    -1px 0 0 rgba(2, 8, 16, 0.85), 1px 0 0 rgba(2, 8, 16, 0.85),
+    0 -1px 0 rgba(2, 8, 16, 0.85), 0 1px 0 rgba(2, 8, 16, 0.85),
+    0 2px 6px rgba(2, 8, 16, 0.6);
+  animation: bfx-float 0.8s ease-out forwards;
+  pointer-events: none;
+}
+.bfx-floater-big { font-size: 31px; }
+.bfx-floater-small { font-size: 16px; }
+
+@keyframes bfx-shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
+}
+.bfx-shake1 { animation: bfx-shake 0.2s ease-in-out 1; }
+.bfx-shake2 { animation: bfx-shake 0.2s ease-in-out 2; }
+
+@keyframes bfx-flash {
+  0% { opacity: 0.55; }
+  100% { opacity: 0; }
+}
+.bfx-flash {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at center, rgba(255, 59, 48, 0.9) 0%, rgba(255, 59, 48, 0) 72%);
+  border-radius: 12px;
+  animation: bfx-flash 0.1s ease-out forwards;
+  pointer-events: none;
+}
+
+@keyframes bfx-faint {
+  0% { opacity: 1; }
+  100% { opacity: 0.15; }
+}
+.bfx-faint { animation: bfx-faint 0.6s ease-in forwards; }
+
+@keyframes bfx-vignette {
+  0% { opacity: 0.55; }
+  100% { opacity: 0; }
+}
+.bfx-vignette {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at center, transparent 40%, #020613 100%);
+  animation: bfx-vignette 0.15s ease-out forwards;
+  pointer-events: none;
+}
+
+@keyframes bfx-ring {
+  0% { transform: scale(0.55); opacity: 0.95; }
+  100% { transform: scale(1.35); opacity: 0; }
+}
+.bfx-ring {
+  position: absolute;
+  width: 120px; height: 120px;
+  border: 3px solid #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 18px rgba(217, 251, 255, 0.28), inset 0 0 10px rgba(217, 251, 255, 0.1);
+  animation: bfx-ring 0.7s ease-out forwards;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bfx-floater, .bfx-shake1, .bfx-shake2, .bfx-flash, .bfx-faint, .bfx-vignette, .bfx-ring { animation: none; }
+  .bfx-floater { opacity: 1; }
+  .bfx-ring { opacity: 0.6; }
+  .bsk-btn { transition: none; }
+  .bp3-shake, .bp3-zoom, .bp3-knock-mine, .bp3-knock-wild, .bp3-flash-half, .bp3-chip-pop { animation: none !important; }
+  .bp3-fighter { transition: none !important; }
+}
+
+/* BP-3 타격감: 흔들림·줌·예비·넉백·번쩍·칩팝·히트스톱. */
+.bp3-shake { animation: bp3-shake 0.2s ease-out 1; }
+@keyframes bp3-shake {
+  0%, 100% { margin-left: 0; margin-top: 0; }
+  20% { margin-left: var(--bp3-px, 4px); margin-top: calc(var(--bp3-px, 4px) * -0.6); }
+  40% { margin-left: calc(var(--bp3-px, 4px) * -0.7); margin-top: calc(var(--bp3-px, 4px) * 0.4); }
+  60% { margin-left: calc(var(--bp3-px, 4px) * 0.4); margin-top: 0; }
+  80% { margin-left: calc(var(--bp3-px, 4px) * -0.2); margin-top: 0; }
+}
+.bp3-zoom { animation: bp3-zoom 0.2s ease-out 1; transform-origin: center; }
+@keyframes bp3-zoom {
+  0%, 100% { transform: scale(1); }
+  40% { transform: scale(1.04); }
+}
+.bp3-fighter { transition: margin-left 0.15s ease-out; }
+.bp3-windup-mine { margin-left: -10px !important; }
+.bp3-windup-wild { margin-left: 10px !important; }
+.bp3-knock-mine { animation: bp3-knock-mine 0.18s ease-out 1; }
+@keyframes bp3-knock-mine {
+  0%, 100% { margin-left: 0; }
+  35% { margin-left: -14px; }
+}
+.bp3-knock-wild { animation: bp3-knock-wild 0.18s ease-out 1; }
+@keyframes bp3-knock-wild {
+  0%, 100% { margin-left: 0; }
+  35% { margin-left: 14px; }
+}
+.bp3-flash-half { animation: bp3-flash-half 0.08s ease-out forwards; pointer-events: none; }
+@keyframes bp3-flash-half {
+  0% { opacity: 0.7; }
+  100% { opacity: 0; }
+}
+.bp3-chip-pop { animation: bp3-chip-pop 0.18s ease-out 1; }
+@keyframes bp3-chip-pop {
+  0% { transform: scale(0.6); opacity: 0.4; }
+  60% { transform: scale(1.05); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+.bp3-hold .bfx-floater, .bp3-hold .bfx-ring, .bp3-hold .bfx-shake1, .bp3-hold .bfx-shake2,
+.bp3-hold .bfx-flash, .bp3-hold .bfx-vignette, .bp3-hold .bp3-chip-pop { animation-play-state: paused; }
+
+/* 8-I remainder: round skill button press feel (placement untouched). */
+.bsk-btn {
+  transition: transform 0.18s ease, box-shadow 0.18s ease, opacity 0.18s ease;
+}
+.bsk-btn:active {
+  transform: scale(0.9);
+  box-shadow: 0 0 14px rgba(217, 251, 255, 0.4);
+}
+.bsk-btn:focus-visible {
+  outline: 2px solid rgba(217, 251, 255, 0.8);
+  outline-offset: 2px;
+}
+
+/* 9-G: capture shutter (self-made). gather sparks -> finder arc. */
+@keyframes cap-spark {
+  from { transform: translate(var(--sx), var(--sy)) scale(1); opacity: 1; }
+  to { transform: translate(0, 0) scale(0.6); opacity: 0.9; }
+}
+.cap-spark {
+  position: absolute;
+  left: 50%;
+  top: 45%;
+  width: 8px;
+  height: 8px;
+  margin: -4px;
+  border-radius: 50%;
+  background: #ffe9a3;
+  box-shadow: 0 0 8px rgba(255, 232, 163, 0.9);
+  animation: cap-spark 0.5s ease-in forwards;
+  pointer-events: none;
+}
+@keyframes cap-arc {
+  from { stroke-dashoffset: 339; }
+  to { stroke-dashoffset: 40; }
+}
+.cap-arc {
+  animation: cap-arc 0.6s linear forwards;
+}
+@keyframes cap-caption {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+.cap-caption-out {
+  animation: cap-caption 0.3s ease-out forwards;
+}
+
+/* Level-up fanfare rework (docs/LEVELUP_FX_ORDER.md). Gold flash 2s + rays +
+   "레벨 N 달성!" entrance wobble (3.2s total). Navy outline, tabular numbers. */
+.bfx-goldflash {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at center, rgba(255, 216, 74, 0.55) 0%, rgba(255, 216, 74, 0) 70%);
+  animation: bfx-goldflash 2s ease-out forwards;
+  pointer-events: none;
+}
+@keyframes bfx-goldflash {
+  0% { opacity: 0.9; }
+  100% { opacity: 0; }
+}
+.bfx-levelup-rays {
+  position: absolute; inset: 0;
+  background: repeating-conic-gradient(from 0deg at 50% 32%,
+    rgba(255, 216, 74, 0.30) 0deg 5deg, rgba(255, 216, 74, 0) 5deg 11deg);
+  -webkit-mask-image: radial-gradient(circle at 50% 32%, #000 0%, rgba(0, 0, 0, 0) 62%);
+  mask-image: radial-gradient(circle at 50% 32%, #000 0%, rgba(0, 0, 0, 0) 62%);
+  animation: bfx-levelup-rays 1.1s ease-out forwards;
+  pointer-events: none;
+}
+@keyframes bfx-levelup-rays {
+  0% { opacity: 0; transform: scale(0.55); }
+  25% { opacity: 0.9; }
+  100% { opacity: 0; transform: scale(1.18); }
+}
+.bfx-levelup-text {
+  position: absolute;
+  left: 50%; top: 30%;
+  transform: translate(-50%, 0);
+  font-weight: 700;
+  font-size: 40px;
+  white-space: nowrap;
+  color: #ffd84a;
+  font-variant-numeric: tabular-nums;
+  text-shadow:
+    -1px 0 0 rgba(2, 8, 16, 0.85), 1px 0 0 rgba(2, 8, 16, 0.85),
+    0 -1px 0 rgba(2, 8, 16, 0.85), 0 1px 0 rgba(2, 8, 16, 0.85),
+    0 2px 8px rgba(2, 8, 16, 0.65),
+    0 0 22px rgba(255, 216, 74, 0.45);
+  animation: bfx-levelup-in 3.2s ease-out forwards;
+  pointer-events: none;
+}
+@keyframes bfx-levelup-in {
+  0% { opacity: 0; transform: translate(-50%, 12px) scale(1.55); }
+  10% { opacity: 1; transform: translate(-50%, 0) scale(1); }
+  14% { transform: translate(calc(-50% - 7px), 0) rotate(-1.6deg); }
+  18% { transform: translate(calc(-50% + 6px), 0) rotate(1.2deg); }
+  22% { transform: translate(calc(-50% - 3px), 0) rotate(-0.6deg); }
+  26% { transform: translate(-50%, 0) rotate(0); }
+  78% { opacity: 1; transform: translate(-50%, -6px); }
+  100% { opacity: 0; transform: translate(-50%, -30px); }
+}
+.bfx-levelup-sub {
+  position: absolute;
+  left: 50%; top: calc(30% + 58px);
+  transform: translate(-50%, 0);
+  font-weight: 700;
+  font-size: 17px;
+  white-space: nowrap;
+  color: #ffe9a8;
+  font-variant-numeric: tabular-nums;
+  text-shadow:
+    -1px 0 0 rgba(2, 8, 16, 0.85), 1px 0 0 rgba(2, 8, 16, 0.85),
+    0 -1px 0 rgba(2, 8, 16, 0.85), 0 1px 0 rgba(2, 8, 16, 0.85),
+    0 2px 6px rgba(2, 8, 16, 0.6);
+  animation: bfx-levelup-sub 3.2s ease-out forwards;
+  pointer-events: none;
+}
+@keyframes bfx-levelup-sub {
+  0%, 7% { opacity: 0; transform: translate(-50%, 6px); }
+  16% { opacity: 1; transform: translate(-50%, 0); }
+  78% { opacity: 1; transform: translate(-50%, -4px); }
+  100% { opacity: 0; transform: translate(-50%, -18px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bfx-goldflash { animation: none; opacity: 0; }
+  .bfx-levelup-rays { animation: none; opacity: 0; }
+  .bfx-levelup-text { animation: none; opacity: 1; transform: translate(-50%, 0); }
+  .bfx-levelup-sub { animation: none; opacity: 1; transform: translate(-50%, 0); }
+  .battle-result-text { animation: none !important; }
+  .bfx-flee-warn { animation: none !important; }
+}
+
+/* UI-3 수정: 결과 연출 텍스트. 총 2.5s (등장 0.3 + 유지 1.8 + 아웃 0.4). */
+@keyframes ui3-win {
+  0% { opacity: 0; transform: scale(0.8); }
+  12% { opacity: 1; transform: scale(1.05); }
+  20% { opacity: 1; transform: scale(1); }
+  84% { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1); }
+}
+@keyframes ui3-lose {
+  0% { opacity: 0; transform: translateY(-8px); }
+  12% { opacity: 1; transform: translateY(0); }
+  84% { opacity: 1; transform: translateY(10px); }
+  100% { opacity: 0; transform: translateY(16px); }
+}
+@keyframes ui3-flee {
+  0% { opacity: 0; transform: none; }
+  12% { opacity: 1; transform: none; }
+  30% { opacity: 1; transform: translateX(-6px); }
+  45% { opacity: 1; transform: translateX(6px); }
+  60% { opacity: 1; transform: translateX(-4px); }
+  75% { opacity: 1; transform: translateX(3px); }
+  84% { opacity: 1; transform: none; }
+  100% { opacity: 0; transform: none; }
+}
+
+/* UI-4 수정: 도망 버튼 눌림 + 거리 경고 붉은 맥동. */
+.bfx-flee-btn { transition: transform 0.12s ease, box-shadow 0.12s ease; }
+.bfx-flee-btn:active { transform: scale(0.93); }
+.bfx-flee-warn { animation: bfx-flee-pulse 1s ease-in-out infinite; }
+@keyframes bfx-flee-pulse {
+  0%, 100% { border-color: rgba(255, 90, 90, 0.55); box-shadow: none; }
+  50% { border-color: #ff5a5a; box-shadow: 0 0 10px rgba(255, 90, 90, 0.5); }
+}
+/* BP-4 효과 말풍선: UI-5 토큰 배경, 0.12초 팝 → 0.9초 유지 → 위로 사라짐(총 1.2초). */
+@keyframes bfx-badge-float {
+  0% { transform: translate(-50%, 8px) scale(0.6); opacity: 0; }
+  10% { transform: translate(-50%, 0) scale(1.12); opacity: 1; }
+  18% { transform: translate(-50%, 0) scale(1); opacity: 1; }
+  75% { transform: translate(-50%, 0) scale(1); opacity: 1; }
+  100% { transform: translate(-50%, -48px) scale(1); opacity: 0; }
+}
+.bfx-badge {
+  font-size: 13px;
+  font-weight: 700;
+  padding: 2px 10px;
+  border: 1px solid;
+  border-radius: 999px;
+  background: var(--battle-panel);
+  transform: translateX(-50%);
+  animation: bfx-badge-float 1.2s ease-out forwards;
+}
+.bfx-badge-good::before { content: "✦ "; }
+.bfx-badge-crit::before { content: "★ "; }
+.bfx-badge-bad::before { content: "▼ "; }
+.bfx-badge-miss::before { content: "○ "; }
+@media (prefers-reduced-motion: reduce) {
+  .bfx-badge { animation: none; }
+}
+
+/* UH-1: 스킬 아이콘 (game-icons SVG를 마스크로, currentColor로 원소색 착색). */
+.skl-ico {
+  display: block;
+  background: currentColor;
+  -webkit-mask: var(--skl-url) center / contain no-repeat;
+  mask: var(--skl-url) center / contain no-repeat;
+  /* AF-2/3: 작은 마스크 가장자리 또렷하게 */
+  filter: drop-shadow(0 1px 1px rgba(0,0,0,0.65));
+}
+/* UH-1: 스킬 설명 말풍선 (길게 누르기 400ms·포커스 시, 버튼 위쪽 유리 스타일). */
+.skl-tip {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: 150px;
+  padding: 6px 10px;
+  border-radius: 10px;
+  background: var(--battle-panel);
+  border: 1px solid var(--battle-edge);
+  box-shadow: var(--battle-shadow);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  font-family: var(--battle-font);
+  line-height: 1.35;
+  text-align: center;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+  pointer-events: none;
+  white-space: normal;
+  z-index: 5;
+  animation: uh1-tip-pop 0.15s ease-out;
+}
+@keyframes uh1-tip-pop {
+  from { opacity: 0; transform: translateX(-50%) translateY(4px) scale(0.95); }
+  to { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+}
+/* AF-3/7: 결과 글자만 (상자·테두리 제거, 가독성은 글자 그림자로). */
+.uh1-result-card {
+  display: inline-block;
+  font-family: var(--battle-font);
+}
+/* UH-1: 도망 연출 (가장자리 흐림 + 뒤로 빠지는 0.5초). */
+.uh1-flee-blur {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  box-shadow: inset 0 0 90px 30px rgba(4, 8, 14, 0.75);
+  animation: uh1-flee-blur 0.5s ease-out;
+}
+@keyframes uh1-flee-blur {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.uh1-pullback {
+  animation: uh1-pullback 0.5s ease-out;
+  transform-origin: 50% 60%;
+}
+@keyframes uh1-pullback {
+  from { transform: scale(1); }
+  to { transform: scale(0.94); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .skl-tip { animation: none; }
+  .uh1-flee-blur { animation: none; }
+  .uh1-pullback { animation: none; }
+}

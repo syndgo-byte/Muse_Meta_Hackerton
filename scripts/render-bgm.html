@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>bgm-render</title></head>
+<body>
+<pre id="out"></pre>
+<pre id="err"></pre>
+<pre id="prog">boot</pre>
+<script>
+"use strict";
+const SCORE = __SCORE_JSON__;
+
+function nearest(list, midi) {
+  let best = list[0];
+  let bd = Math.abs(list[0].midi - midi);
+  for (const s of list) {
+    const d = Math.abs(s.midi - midi);
+    if (d < bd) { bd = d; best = s; }
+  }
+  return best;
+}
+
+function makeIR(ctx, seconds, decay) {
+  const rate = ctx.sampleRate;
+  const len = Math.floor(rate * seconds);
+  const ir = ctx.createBuffer(2, len, rate);
+  for (let c = 0; c < 2; c++) {
+    const d = ir.getChannelData(c);
+    for (let i = 0; i < len; i++) {
+      d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, decay);
+    }
+  }
+  return ir;
+}
+
+function encodeWav(buffer) {
+  const nCh = 2;
+  const sr = buffer.sampleRate;
+  const n = buffer.length;
+  const bytes = 44 + n * nCh * 2;
+  const ab = new ArrayBuffer(bytes);
+  const v = new DataView(ab);
+  const wstr = (o, s) => { for (let i = 0; i < s.length; i++) v.setUint8(o + i, s.charCodeAt(i)); };
+  wstr(0, "RIFF"); v.setUint32(4, bytes - 8, true); wstr(8, "WAVE");
+  wstr(12, "fmt "); v.setUint32(16, 16, true); v.setUint16(20, 1, true);
+  v.setUint16(22, nCh, true); v.setUint32(24, sr, true);
+  v.setUint32(28, sr * nCh * 2, true); v.setUint16(32, nCh * 2, true);
+  v.setUint16(34, 16, true); wstr(36, "data"); v.setUint32(40, n * nCh * 2, true);
+  const ch0 = buffer.getChannelData(0);
+  const ch1 = buffer.numberOfChannels > 1 ? buffer.getChannelData(1) : ch0;
+  let o = 44;
+  for (let i = 0; i < n; i++) {
+    for (const ch of [ch0, ch1]) {
+      const s = Math.max(-1, Math.min(1, ch[i]));
+      v.setInt16(o, s < 0 ? s * 0x8000 : s * 0x7fff, true);
+      o += 2;
+    }
+  }
+  return new Uint8Array(ab);
+}
+
+function b64(bytes) {
+  let s = "";
+  const CH = 0x8000;
+  for (let i = 0; i < bytes.length; i += CH) {
+    s += String.fromCharCode.apply(null, bytes.subarray(i, i + CH));
+  }
+  return btoa(s);
+}
+
+async function run() {
+  const sr = SCORE.sr;
+  const ctx = new OfflineAudioContext(2, Math.ceil(sr * SCORE.duration), sr);
+  const master = ctx.createGain();
+  master.gain.value = 0.7;
+  const comp = ctx.createDynamicsCompressor();
+  comp.threshold.value = -18;
+  comp.ratio.value = 4;
+  master.connect(comp);
+  comp.connect(ctx.destination);
+  // 짧은 룸 리버브 (믹싱용, 악기 합성 아님)
+  const verb = ctx.createConvolver();
+  verb.buffer = makeIR(ctx, 0.5, 2.5);
+  const wet = ctx.createGain();
+  wet.gain.value = 0.15;
+  verb.connect(wet);
+  wet.connect(master);
+
+  async function load(url) {
+    const res = await fetch(url);
+    const buf = await res.arrayBuffer();
+    return await ctx.decodeAudioData(buf);
+  }
+
+  const cache = {};
+  async function bufOf(url) {
+    if (!cache[url]) cache[url] = await load(url);
+    return cache[url];
+  }
+
+  const decoded = {};
+  for (const [inst, list] of Object.entries(SCORE.samples)) {
+    decoded[inst] = [];
+    for (const s of list) {
+      decoded[inst].push({ midi: s.midi, buf: await bufOf(s.url) });
+    }
+  }
+  const drums = {};
+  for (const [name, url] of Object.entries(SCORE.drums)) {
+    drums[name] = await bufOf(url);
+  }
+  document.getElementById("prog").textContent = "decoded";
+
+  function schedule(buf, t, rate, vel, dur, cap) {
+    const src = ctx.createBufferSource();
+    src.buffer = buf;
+    src.playbackRate.value = rate;
+    const g = ctx.createGain();
+    const a = 0.008;
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.linearRampToValueAtTime(vel, t + a);
+    const stopAt = Math.min(t + dur, t + buf.duration / rate, cap ? t + cap : Infinity);
+    const rel = Math.min(0.08, Math.max(0.02, (stopAt - t) * 0.25));
+    g.gain.setValueAtTime(vel, Math.max(t + a, stopAt - rel));
+    g.gain.linearRampToValueAtTime(0.0001, stopAt + 0.02);
+    src.connect(g);
+    g.connect(master);
+    g.connect(verb);
+    src.start(t, 0);
+    src.stop(stopAt + 0.05);
+  }
+
+  for (const e of SCORE.events) {
+    if (e.inst) {
+      const s = nearest(decoded[e.inst], e.midi);
+      schedule(s.buf, e.t, Math.pow(2, (e.midi - s.midi) / 12), e.vel, e.dur, 0);
+    } else if (e.drum === "snare") {
+      schedule(drums.snare, e.t, 1, e.vel, e.dur, 0.5);
+    } else if (e.drum === "cymbal") {
+      schedule(drums.cymbal, e.t, 1, e.vel, e.dur, 2.5);
+    } else if (e.drum === "timpani") {
+      schedule(drums.timpani, e.t, Math.pow(2, (e.midi - SCORE.timpaniMidi) / 12), e.vel, e.dur, 1.5);
+    }
+  }
+
+  document.getElementById("prog").textContent = "rendering";
+  const rendered = await ctx.startRendering();
+  document.getElementById("prog").textContent = "encoding";
+  document.getElementById("out").textContent = b64(encodeWav(rendered));
+  document.getElementById("prog").textContent = "done";
+}
+
+run().catch((e) => {
+  document.getElementById("err").textContent = String((e && e.stack) || e);
+});
+</script>
+</body></html>
