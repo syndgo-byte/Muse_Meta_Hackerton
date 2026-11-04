@@ -29,7 +29,7 @@ Local bundles (`public/vendor/`) replace the draco/MediaPipe CDNs for offline bu
 ## Run (local)
 
 ```bash
-npm ci
+cd web && npm ci
 # Windows: copy .env.example .env / mac·Linux: cp .env.example .env
 # then put your key in .env: MODEL_API_KEY=...
 npm run dev
@@ -54,23 +54,23 @@ Releases: v1.0-submission (제출 확정 후 링크 기입 — APK·exe 바이�
 
 ## 핵심 파일 지도
 
-- `app/pov/page.tsx` — 탐험·배틀 메인 화면 (스캔·음성·배틀).
-- `app/dex/page.tsx` — 도감 + 춤 비교. `app/camp/page.tsx` — 캠프(토큰·외부 연결 패널).
-- `app/api/creature|look|diary|feed|battle|voice/route.ts` — AI 라우트 (키 없으면 200 + `fallback:true`).
-- `app/api/muse/ask/route.ts` — 음성 질문 이해 (VA-1/VA-2).
-- `lib/muse.ts` — Meta Model API 호출 공통. `lib/ask/intents.ts` — 질문 intent 9종.
-- `lib/token/` — 토큰 장부·시뮬레이션 구역. `lib/places/` — 충전처·힙한 곳 근거 목록.
-- `lib/external/registry.ts` — 외부 API 등록부 ([표](docs/EXTERNAL_APIS.md) 원천).
-- `components/CaptureBox.tsx` — 포획 상자. `components/PovCreature.tsx` — 크리처 3D.
-- `scripts/verify-*.mjs` — 기능별 검증 스크립트 (아래 실행법).
-- `electron/` — Windows exe 포장. `android/` — APK 래퍼 소스. `docs/EXTERNAL_APIS.md` — 외부 API 표.
+- `web/app/pov/page.tsx` — 탐험·배틀 메인 화면 (스캔·음성·배틀).
+- `web/app/dex/page.tsx` — 도감 + 춤 비교. `web/app/camp/page.tsx` — 캠프(토큰·외부 연결 패널).
+- `web/app/api/creature|look|diary|feed|battle|voice/route.ts` — AI 라우트 (키 없으면 200 + `fallback:true`).
+- `web/app/api/muse/ask/route.ts` — 음성 질문 이해 (VA-1/VA-2).
+- `web/lib/muse.ts` — Meta Model API 호출 공통. `web/lib/ask/intents.ts` — 질문 intent 9종.
+- `web/lib/token/` — 토큰 장부·시뮬레이션 구역. `web/lib/places/` — 충전처·힙한 곳 근거 목록.
+- `web/lib/external/registry.ts` — 외부 API 등록부 ([표](docs/EXTERNAL_APIS.md) 원천).
+- `web/components/CaptureBox.tsx` — 포획 상자. `web/components/PovCreature.tsx` — 크리처 3D.
+- `web/scripts/verify-*.mjs` — 기능별 검증 스크립트 (아래 실행법).
+- `desktop/electron/` — Windows exe 포장. `mobile/android/` — APK 래퍼 소스. `docs/EXTERNAL_APIS.md` — 외부 API 표.
 
 ## 검증 스크립트 실행법
 
 ```bash
-node scripts/verify-voice-ask.mjs   # VA 음성 질문 (종료 코드 0 = 통과)
-node scripts/verify-battle.mjs      # 배틀 엔진
-node scripts/verify-sec.mjs         # 보안 게이트
+node web/scripts/verify-voice-ask.mjs   # VA 음성 질문 (종료 코드 0 = 통과)
+node web/scripts/verify-battle.mjs      # 배틀 엔진
+node web/scripts/verify-sec.mjs         # 보안 게이트
 ```
 
 ## Credits

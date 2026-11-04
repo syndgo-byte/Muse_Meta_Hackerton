@@ -44,11 +44,11 @@ venv/
 # 기준 커밋 제외 (로컬 전용)
 tmp/
 generated_images/
-unity/
+/unity/
 .handoff/
 
 # 토큰 서버 원장 (D4, 로컬 전용)
-data/
+/data/
 # 토큰 SQLite (§2-1a, data/에 포함되지만 명시)
 data/token.sqlite
 # SUB-1 제출 포함: unity 4폴더 + places 시드 (이 아래 규칙이 위 제외를 뒤집는다)
@@ -97,13 +97,13 @@ android/local.properties
 *.aab
 
 # 제출 정리 (11-05): 플레이·설치에 불필요한 것은 깃허브에 올리지 않는다
-unity/
-video/
-data/
-apk-web/
+/unity/
+/video/
+/data/
+/apk-web/
 docs/*
 !docs/EXTERNAL_APIS.md
 !docs/img/
 
 # 배경음악: 원곡 출하 금지 규칙 확인 전까지 제외 (플레이 필수 아님)
-public/bgm/
+web/public/bgm/
