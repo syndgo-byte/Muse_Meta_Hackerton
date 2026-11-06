@@ -1,0 +1,8 @@
+BGM in use (8-D)
+- public/bgm/field.mp3: "Call to Adventure" by Kevin MacLeod (incompetech), CC-BY.
+  Source: https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1300022
+  Direct: https://incompetech.com/music/royalty-free/mp3-royaltyfree/Call%20to%20Adventure.mp3
+  Cut: first 116.4s (phrase-end dip at 116.4s), looped with 2s fade-out + 0.5s fade-in.
+  Used for: main + field(/pov) + battle + camp (all scenes, single track).
+- public/bgm/samples/*: composed-track samples (see CREDITS-samples below on adoption).
+- public/bgm/candidates/*: comparison candidates, not wired (see candidates/LIST.md).

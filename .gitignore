@@ -65,6 +65,7 @@ data/*
 !data/places/
 !data/places/*
 *.mp4
+!web/public/videos/*.mp4
 
 # 저장소 제외 (원곡·참고·생성 산출물)
 public/bgm/battle.mp3
@@ -105,5 +106,3 @@ docs/*
 !docs/EXTERNAL_APIS.md
 !docs/img/
 
-# 배경음악: 원곡 출하 금지 규칙 확인 전까지 제외 (플레이 필수 아님)
-web/public/bgm/

@@ -102,8 +102,8 @@ node scripts/verify-sec.mjs         # security gate
 
 ## Credits
 
-- Music: "Call to Adventure" by Kevin MacLeod (incompetech.com), CC BY 4.0. Music files are not included in this repository.
-- Battle music: generated with ACE-Step (Apache 2.0). Not included in this repository.
+- Music: "Call to Adventure" by Kevin MacLeod (incompetech.com), CC BY 4.0. Files: `web/public/bgm/`.
+- Battle music: generated with ACE-Step (Apache 2.0). Files: `web/public/bgm/battle/`.
 - Viewfinder tracking: 1€ filter (BSD-3-Clause), https://github.com/casiez/OneEuroFilter
 - Battle HUD motion: motion 11.18.2 (MIT), https://github.com/motiondivision/motion
 - Battle display font: Jua and Baloo 2 (SIL Open Font License, Google Fonts), self-hosted in `web/public/fonts`.
