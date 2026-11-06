@@ -60,6 +60,17 @@ We did not finish everything in this hackathon. Here is what is still open:
 
 I built OiShi-e! alone, in the hours left after my full-time job. I think the idea is good, but building all of it in that time was hard, and some structure choices were made for speed. I missed one important point, and I want to state it clearly.
 
+**Development PC:** everything was built and tested on one old desktop:
+
+| Part | Spec |
+|---|---|
+| CPU | Intel Core i5-6500 (2015, 4 cores) |
+| RAM | 16 GB |
+| GPU | NVIDIA GeForce GTX 1060 6GB |
+| OS | Windows 10 Pro |
+
+Builds, 3D model work, video rendering and local AI tests (such as music generation) were slow on this machine, so each try-and-fix round took a long time. This limited how much I could test, for example on real phones and glasses.
+
 **What I missed:** I designed the phone and glasses demo around a PC server on the same Wi-Fi. A judge who only downloads the APK cannot try it without that PC. The Windows installer is the build that runs on its own.
 
 ### Current structure (hackathon build)
@@ -214,4 +225,4 @@ node scripts/verify-sec.mjs         # security gate
 ---
 
 Submitted: 2026-11-05 01:03
-Updated after the deadline: 2026-11-06 23:40 (see "Submission history" above)
+Updated after the deadline: 2026-11-06 23:43 (see "Submission history" above)
