@@ -154,4 +154,5 @@ node scripts/verify-sec.mjs         # security gate
 
 ---
 
-Last updated: 2026-11-06 23:36
+Submitted: 2026-11-05 01:03
+Updated after the deadline: 2026-11-06 23:36 (README notes on structure and limits; installer and APK added to Releases. No code changes.)
