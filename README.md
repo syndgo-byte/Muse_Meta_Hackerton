@@ -28,7 +28,7 @@ Demo video: link coming soon.
 | After the deadline (2026-11-06 20:36) | Two dance reference clips added to the repo (already inside the installer) | `5167b41` |
 | After the deadline (2026-11-06 20:46) | `web/data/places/hip.json` added so the web build works from a clean clone (already inside the installer) | `2c998fa` |
 | After the deadline (2026-11-06 23:36) | Installer and APK built on 2026-11-04 uploaded to Releases as they were | [Releases `v1.0-submission`](https://github.com/syndgo-byte/Muse_Meta_Hackerton/releases/tag/v1.0-submission) |
-| After the deadline (2026-11-06) | README: this history, limits, current and planned structure | README only |
+| After the deadline (2026-11-06 ~ 11-07) | README: this history, limits, development PC, current and planned structure, value network concept | README only |
 
 These files had been left out of the upload, not changed. No app code was changed after the deadline.
 
@@ -55,6 +55,61 @@ We did not finish everything in this hackathon. Here is what is still open:
 - **Social data:** the SNS hot-spot feature has the adapter layer only. No real social data is connected.
 - **Tokens:** the tokens in the app are demo tokens. There is no real payment or settlement.
 - **Android APK needs a PC:** the APK has no server inside. It cannot be tried on a phone alone (see below).
+
+## Our identity: an everyday value network (concept)
+
+> This is a concept proposal, not a running business. In the hackathon build the store signals are simulated and the SNS part has the adapter layer only.
+
+OiShi-e! is not only a game. The goal is a loop where SNS trends, real shops, players and Meta's Muse AI all gain from the same everyday actions.
+
+```mermaid
+flowchart LR
+  SNS["SNS trends<br/>(Instagram, Facebook,<br/>Threads, YouTube)"]
+  ONT["Muse place map<br/>(trend + partner shops)"]
+  PLAYER["Player + creature<br/>(phone / Ray-Ban glasses)"]
+  SHOP["Partner shop<br/>(cafe, restaurant, event)"]
+  TOKEN["Muse tokens<br/>(in the player's wallet)"]
+  MUSE["Meta Muse AI<br/>(Muse Spark, Muse Image,<br/>voice, motion)"]
+  META["Meta"]
+
+  SNS -- "hot spots" --> ONT
+  ONT -- "AR arrow: go here" --> PLAYER
+  PLAYER -- "visits and pays" --> SHOP
+  SHOP -- "payment / visit signal<br/>(3% of payment, +50 per visit, event bonus)" --> TOKEN
+  SHOP -- "pays for tokens as marketing<br/>(B2B settlement)" --> META
+  TOKEN -- "spent on upgrades, dance skills,<br/>motion, diary images" --> MUSE
+  MUSE -- "creature grows" --> PLAYER
+  PLAYER -- "shares creature + shop tag" --> SNS
+  META -- "runs and earns from" --> MUSE
+  SNS -- "content and engagement" --> META
+```
+
+**How the money moves**
+
+1. SNS trends and partner shops are merged into one place map. The creature points the player to a hot spot in AR.
+2. The player visits and pays at the shop as usual. The shop sends a payment or visit signal, and Muse tokens are added automatically. The player never buys tokens or uploads receipts.
+3. The shop pays for those tokens as a marketing cost (B2B settlement). That money funds the Muse AI usage.
+4. The player spends tokens on Muse AI features. The creature grows, so the player wants to go out again.
+5. The player shares the creature with the shop tag on SNS. This brings new customers to the shop and new content to Meta's platforms, and the loop starts again.
+
+**Who gains what**
+
+| Who | Gives | Gets |
+|---|---|---|
+| Player | Everyday visits and payments they already make | Free Muse AI features, a creature that grows with their real life |
+| Partner shop | Marketing cost per payment / visit | Customers sent by trends and AR, SNS posts with its tag |
+| Meta | Muse AI and the platform | Paid AI usage (through shop settlement), more SNS content and engagement, a daily reason to wear Ray-Ban glasses |
+| SNS | Trend data (official APIs only, no crawling) | Shared creature posts, new content |
+
+**Built vs. planned**
+
+| Part | Hackathon build | Planned |
+|---|---|---|
+| Token wallet, earning and spending | Built (demo tokens) | Real ledger; issuing and settlement method not decided yet |
+| Shop payment / visit signal | Simulated signal (`/api/token/credit-signal`) | Partner webhooks from real shops |
+| SNS trend data | Adapter layer and place map; no live data | Official SNS APIs once keys are approved |
+| B2B settlement with Meta | Design only | Contract and settlement flow |
+| Sharing to SNS | Share button with tags | Same, linked to partner shop tags |
 
 ## What I missed, and what comes next
 
@@ -225,4 +280,4 @@ node scripts/verify-sec.mjs         # security gate
 ---
 
 Submitted: 2026-11-05 01:03
-Updated after the deadline: 2026-11-06 23:43 (see "Submission history" above)
+Updated after the deadline: 2026-11-07 00:18 (see "Submission history" above)
