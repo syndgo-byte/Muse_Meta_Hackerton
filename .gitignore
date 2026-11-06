@@ -66,6 +66,7 @@ data/*
 !data/places/*
 *.mp4
 !web/public/videos/*.mp4
+!web/public/dance/ref/*.mp4
 
 # 저장소 제외 (원곡·참고·생성 산출물)
 public/bgm/battle.mp3
