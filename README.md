@@ -41,6 +41,31 @@ We did not finish everything in this hackathon. Here is what is still open:
 - **Player vs. player battles:** not implemented.
 - **Social data:** the SNS hot-spot feature has the adapter layer only. No real social data is connected.
 - **Tokens:** the tokens in the app are demo tokens. There is no real payment or settlement.
+- **Android APK needs a PC:** the APK has no server inside. It cannot be tried on a phone alone (see below).
+
+## What I missed, and what comes next
+
+I built OiShi-e! alone, in the hours left after my full-time job. I think the idea is good, but building all of it in that time was hard, and some structure choices were made for speed. I missed one important point, and I want to state it clearly.
+
+**Current structure**
+
+- One Next.js app holds both the screens (frontend) and 26 API routes (backend). Game state is saved as files on the machine that runs this server.
+- **Windows installer:** bundles that server and starts it on the same PC. It works on its own, with music and videos included.
+- **Android APK:** a thin client. It loads the screens from a PC server on the same Wi-Fi (`npm run serve:lan`). Without that PC, it cannot run.
+- One save file per server, so this is a single-player setup. Encounters between players use an in-browser channel, so they only work between tabs of the same browser.
+
+**What I missed**
+
+I designed the phone and glasses demo around a PC server on the same Wi-Fi. A judge who only downloads the APK cannot try it without that PC. The Windows installer is the build that runs on its own.
+
+**Planned structure for a real service**
+
+- One hosted HTTPS server that every client connects to: the Windows app, the APK and the browser.
+- Per-user data in a database, keyed by sign-in (Google sign-in already works).
+- A realtime channel (for example WebSocket) for encounters and player-vs-player battles.
+- The APK points at that server by default, so it works right after install.
+
+Most of the screen and API code can stay. The new parts are the storage layer, the realtime channel and hosting.
 
 ## Run locally
 
@@ -48,8 +73,8 @@ We did not finish everything in this hackathon. Here is what is still open:
 cd web
 npm ci
 # Copy the example env file, then add your key:
-#   Windows: copy .env.example .env
-#   macOS/Linux: cp .env.example .env
+#   Windows: copy ..\.env.example .env
+#   macOS/Linux: cp ../.env.example .env
 # Set MODEL_API_KEY=... inside .env
 npm run dev
 # open http://localhost:3000
@@ -64,11 +89,11 @@ Without a key, the AI routes still respond with a rule-based stand-in (`fallback
 | Platform | How to run | Status |
 |---|---|---|
 | Web (PC Chrome) | `npm run dev` from `web/` | Ready |
-| Windows | Electron installer (`desktop/`) | Built from source; installer on Releases |
-| Android | Capacitor wrapper (`mobile/`), connects to the PC server on the same Wi-Fi | Debug APK on Releases |
-| Ray-Ban Meta | Same APK with Bluetooth glasses audio (HFP) | Not yet tested on real glasses |
+| Windows | Electron installer (`desktop/`) | Installer on Releases. Runs on its own (server, music and videos bundled) |
+| Android | Capacitor wrapper (`mobile/`) | Debug APK on Releases. Needs a PC running `npm run serve:lan` on the same Wi-Fi |
+| Ray-Ban Meta | Same APK with Bluetooth glasses audio (HFP) | Same PC requirement; not yet tested on real glasses |
 
-Releases (`v1.0-submission`) will hold the Windows installer and the Android APK. The binaries are not stored in this repository.
+Download: [Releases `v1.0-submission`](https://github.com/syndgo-byte/Muse_Meta_Hackerton/releases/tag/v1.0-submission) (`OiShi-e-Setup-0.1.0.exe`, `OiShi-e-debug.apk`). The binaries are not stored in this repository.
 
 ## External services
 
@@ -115,10 +140,10 @@ node scripts/verify-sec.mjs         # security gate
 
 ## Not included in this repository
 
-- Song originals and reference-only media.
+- Unused music candidates and other reference media (the two short dance reference clips in `web/public/dance/ref/` are included because the dance comparison uses them).
 - Reference image sets, scratch folders, local token ledger, local certificates.
 - `.env` and any key files. Keys are never committed.
-- Build outputs (APK and Windows installer): see Releases.
+- Build outputs (APK and Windows installer): see [Releases](https://github.com/syndgo-byte/Muse_Meta_Hackerton/releases/tag/v1.0-submission).
 
 ## Security notes
 
@@ -129,4 +154,4 @@ node scripts/verify-sec.mjs         # security gate
 
 ---
 
-Last updated: 2026-11-05 01:03
+Last updated: 2026-11-06 23:36
