@@ -19,6 +19,19 @@ Healthy-habit apps often feel like chores, and most AR games end when you close 
 
 Demo video: link coming soon.
 
+## Submission history
+
+| When | What | Commit / place |
+|---|---|---|
+| **Deadline submission** (2026-11-05 01:04) | Full source code and README | [`ca741cb`](https://github.com/syndgo-byte/Muse_Meta_Hackerton/tree/ca741cb) |
+| After the deadline (2026-11-06 20:35) | Background music and walk videos added to the repo (already inside the installer) | `ba4bbf8` |
+| After the deadline (2026-11-06 20:36) | Two dance reference clips added to the repo (already inside the installer) | `5167b41` |
+| After the deadline (2026-11-06 20:46) | `web/data/places/hip.json` added so the web build works from a clean clone (already inside the installer) | `2c998fa` |
+| After the deadline (2026-11-06 23:36) | Installer and APK built on 2026-11-04 uploaded to Releases as they were | [Releases `v1.0-submission`](https://github.com/syndgo-byte/Muse_Meta_Hackerton/releases/tag/v1.0-submission) |
+| After the deadline (2026-11-06) | README: this history, limits, current and planned structure | README only |
+
+These files had been left out of the upload, not changed. No app code was changed after the deadline.
+
 ## Built with Meta
 
 - **Muse Spark** (muse-spark-1.3) through the Meta Model API. It analyzes camera captures to create creatures (`/api/look`, `/api/creature`), writes daily diaries (`/api/diary`), reacts to feeding (`/api/feed`), and drives battle commentary (`/api/battle`).
@@ -47,25 +60,71 @@ We did not finish everything in this hackathon. Here is what is still open:
 
 I built OiShi-e! alone, in the hours left after my full-time job. I think the idea is good, but building all of it in that time was hard, and some structure choices were made for speed. I missed one important point, and I want to state it clearly.
 
-**Current structure**
+**What I missed:** I designed the phone and glasses demo around a PC server on the same Wi-Fi. A judge who only downloads the APK cannot try it without that PC. The Windows installer is the build that runs on its own.
 
-- One Next.js app holds both the screens (frontend) and 26 API routes (backend). Game state is saved as files on the machine that runs this server.
-- **Windows installer:** bundles that server and starts it on the same PC. It works on its own, with music and videos included.
-- **Android APK:** a thin client. It loads the screens from a PC server on the same Wi-Fi (`npm run serve:lan`). Without that PC, it cannot run.
-- One save file per server, so this is a single-player setup. Encounters between players use an in-browser channel, so they only work between tabs of the same browser.
+### Current structure (hackathon build)
 
-**What I missed**
+Each PC runs its own copy of the server. Every player has a separate, single-player world.
 
-I designed the phone and glasses demo around a PC server on the same Wi-Fi. A judge who only downloads the APK cannot try it without that PC. The Windows installer is the build that runs on its own.
+```mermaid
+flowchart LR
+  subgraph PC["Player's PC"]
+    EXE["Windows app (Electron)"]
+    subgraph SRV["Next.js server (bundled in the app)"]
+      UI["Screens (frontend)"]
+      API["26 API routes (backend)"]
+      FILE[("Save files<br/>data/*.json, token.sqlite")]
+    end
+    EXE --> UI
+    UI --> API
+    API --> FILE
+  end
+  APK["Android APK<br/>(thin client)"] -. "same Wi-Fi only<br/>address + 6-digit code" .-> SRV
+  GLS["Ray-Ban glasses"] -. "Bluetooth audio" .-> APK
+  API -. "if a key is set" .-> META["Meta Model API<br/>(Muse Spark, Muse Image,<br/>transcription, Llama Guard)"]
+```
 
-**Planned structure for a real service**
+### Planned structure (real service)
 
-- One hosted HTTPS server that every client connects to: the Windows app, the APK and the browser.
-- Per-user data in a database, keyed by sign-in (Google sign-in already works).
-- A realtime channel (for example WebSocket) for encounters and player-vs-player battles.
-- The APK points at that server by default, so it works right after install.
+One hosted server for everyone, once the API access, sign-in and hosting are in place.
 
-Most of the screen and API code can stay. The new parts are the storage layer, the realtime channel and hosting.
+```mermaid
+flowchart LR
+  EXE["Windows app"] --> GW
+  APK["Android APK"] --> GW
+  WEB["Browser"] --> GW
+  GLS["Ray-Ban glasses (DAT camera)"] --> APK
+  subgraph CLOUD["Hosted service (HTTPS)"]
+    GW["Web + API server<br/>(same screens and routes)"]
+    RT["Realtime channel<br/>(WebSocket)"]
+    DB[("Per-user database")]
+    AUTH["Sign-in<br/>(Google, Meta)"]
+    GW --> DB
+    GW --> AUTH
+    RT --> DB
+  end
+  APK <--> RT
+  WEB <--> RT
+  GW --> META["Meta Model API<br/>(server-side key)"]
+  GW --> SNS["Social hot-spot data"]
+```
+
+### Current vs. planned
+
+| Part | Current (hackathon build) | Planned (real service) |
+|---|---|---|
+| Server | Runs on each player's PC | One hosted HTTPS server |
+| Windows app | Bundles its own server, works offline | Connects to the hosted server |
+| Android APK | Needs a PC on the same Wi-Fi + 6-digit code | Connects to the hosted server right after install |
+| Player data | Files on that PC, one player per server | Database, separated per signed-in user |
+| Player vs. player | Not implemented (in-browser test channel only) | Realtime channel for encounters and battles |
+| Sign-in | Google works, Meta not configured | Google and Meta |
+| AI | Meta Model API when a key is set, rule-based stand-in otherwise | Meta Model API with a server-side key |
+| Ray-Ban glasses | Bluetooth audio only, not tested on real glasses | DAT camera + audio, tested on real glasses |
+| Social hot spots | Adapter layer only | Connected to real social data |
+| Tokens | Demo tokens | Real ledger |
+
+Most of the screen and API code can stay. The new parts are the storage layer, the realtime channel, sign-in for Meta and hosting.
 
 ## Run locally
 
@@ -155,4 +214,4 @@ node scripts/verify-sec.mjs         # security gate
 ---
 
 Submitted: 2026-11-05 01:03
-Updated after the deadline: 2026-11-06 23:36 (README notes added. The installer and APK built on 2026-11-04 were uploaded to Releases as they were; they had not been uploaded before. No files were changed.)
+Updated after the deadline: 2026-11-06 23:40 (README notes added. The installer and APK built on 2026-11-04 were uploaded to Releases as they were; they had not been uploaded before. No files were changed.)
