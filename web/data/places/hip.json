@@ -1,0 +1,10 @@
+[
+  { "name": "연남 푸드트럭", "kind": "food", "zone": "street", "distM": 80, "tags": ["instagram"], "source": "TOKEN_ZONES 큐레이션" },
+  { "name": "성수 베이커리", "kind": "cafe", "zone": "street", "distM": 120, "tags": ["instagram", "youtube"], "source": "TOKEN_ZONES 큐레이션" },
+  { "name": "연남 벽화골목", "kind": "spot", "zone": "street", "distM": 200, "tags": ["instagram"], "source": "큐레이션" },
+  { "name": "성수 팝업스토어", "kind": "shop", "zone": "street", "distM": 350, "tags": ["youtube"], "source": "큐레이션" },
+  { "name": "홍대 카페거리", "kind": "cafe", "zone": "cafe", "distM": 200, "tags": ["instagram"], "source": "TOKEN_ZONES 큐레이션" },
+  { "name": "성수 베이커리", "kind": "cafe", "zone": "cafe", "distM": 150, "tags": ["instagram", "youtube"], "source": "TOKEN_ZONES 큐레이션" },
+  { "name": "합정 레코드샵", "kind": "shop", "zone": "cafe", "distM": 420, "tags": ["youtube"], "source": "큐레이션" },
+  { "name": "망원 한강공원", "kind": "spot", "zone": "cafe", "distM": 600, "tags": ["instagram"], "source": "큐레이션" }
+]
