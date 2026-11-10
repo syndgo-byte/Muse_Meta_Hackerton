@@ -1,0 +1,24 @@
+Meta Global AI Developer Hackathon (Cerebral Valley) - 아카이브 링크
+저장일: 2026-11-10
+
+[내 작품 페이지 - 3271번 Meta_Yaho (OiShi-e!)]
+원본:     https://cerebralvalley.ai/e/meta-ai-developer-hackathon/hackathon/gallery/3271
+아카이브: https://web.archive.org/web/20261110095149/https://cerebralvalley.ai/e/meta-ai-developer-hackathon/hackathon/gallery/3271
+PC 파일:  my-project-3271.pdf / my-project-3271.png
+
+[대회 페이지]
+원본:     https://cerebralvalley.ai/e/meta-ai-developer-hackathon
+아카이브: https://web.archive.org/web/20261110082913/https://cerebralvalley.ai/e/meta-ai-developer-hackathon
+PC 파일:  event.pdf / event.png / event.md
+
+[갤러리 (앞부분만 저장됨)]
+원본:     https://cerebralvalley.ai/e/meta-ai-developer-hackathon/hackathon/gallery
+아카이브: https://web.archive.org/web/20261110082956/https://cerebralvalley.ai/e/meta-ai-developer-hackathon/hackathon/gallery
+PC 파일:  gallery.pdf / gallery.png
+
+[내 신청서 - 로그인 필요, 아카이브 없음 (개인정보)]
+PC 파일:  my-application.pdf / my-application.png
+
+[GitHub]
+https://github.com/syndgo-byte/Muse_Meta_Hackerton
+릴리스: https://github.com/syndgo-byte/Muse_Meta_Hackerton/releases/tag/v1.0-submission

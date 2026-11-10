@@ -29,6 +29,7 @@ Demo video: link coming soon.
 | After the deadline (2026-11-06 20:46) | `web/data/places/hip.json` added so the web build works from a clean clone (already inside the installer) | `2c998fa` |
 | After the deadline (2026-11-06 23:36) | Installer and APK built on 2026-11-04 uploaded to Releases as they were | [Releases `v1.0-submission`](https://github.com/syndgo-byte/Muse_Meta_Hackerton/releases/tag/v1.0-submission) |
 | After the deadline (2026-11-06 ~ 11-07) | README: this history, limits, development PC, current and planned structure, value network concept | README only |
+| After the deadline (2026-11-10) | Hackathon record saved: project page (gallery #3271), event page, application, Wayback Machine links | [`docs/hackathon-record/`](docs/hackathon-record/) |
 
 These files had been left out of the upload, not changed. No app code was changed after the deadline.
 
@@ -280,4 +281,4 @@ node scripts/verify-sec.mjs         # security gate
 ---
 
 Submitted: 2026-11-05 01:03
-Updated after the deadline: 2026-11-07 00:18 (see "Submission history" above)
+Updated after the deadline: 2026-11-10 19:10 (see "Submission history" above)

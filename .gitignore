@@ -51,6 +51,7 @@ generated_images/
 /data/
 # 토큰 SQLite (§2-1a, data/에 포함되지만 명시)
 data/token.sqlite
+token.sqlite
 # SUB-1 제출 포함: unity 4폴더 + places 시드 (이 아래 규칙이 위 제외를 뒤집는다)
 !unity/
 unity/Library/
@@ -106,4 +107,5 @@ android/local.properties
 docs/*
 !docs/EXTERNAL_APIS.md
 !docs/img/
+!docs/hackathon-record/
 
